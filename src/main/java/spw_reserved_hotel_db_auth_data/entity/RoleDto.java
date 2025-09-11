@@ -1,13 +1,11 @@
 package spw_reserved_hotel_db_auth_data.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import spw_reserved_hotel_db_auth_data.dto.type.RolesType;
 
 @Data
 @Entity
@@ -18,5 +16,6 @@ public class RoleDto {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
-    private String roleType;
+    @Enumerated(EnumType.STRING)
+    private RolesType rolesType;
 }

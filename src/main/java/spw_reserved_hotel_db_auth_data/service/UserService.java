@@ -6,13 +6,13 @@ import spw_reserved_hotel_db_auth_data.web.response.UserResponse;
 import java.util.List;
 
 public interface UserService {
-    void createUser(UserRequest userRequest);
+    UserResponse createUser(UserRequest userRequest);
 
     UserResponse authenticate(UserRequest userRequest);
 
-    boolean updateUser(UserRequest userRequest);
+    UserResponse updateUser(UserRequest userRequest);
 
-    boolean deleteUser(UserRequest userRequest);
+    UserResponse deleteUser(UserRequest userRequest);
 
-    List<UserResponse> getAllUsers();
+    UserResponse getAllUsers();
 }

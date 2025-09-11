@@ -2,14 +2,11 @@ package spw_reserved_hotel_db_auth_data.web.contoller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import spw_reserved_hotel_db_auth_data.service.UserService;
 import spw_reserved_hotel_db_auth_data.web.request.UserRequest;
 import spw_reserved_hotel_db_auth_data.web.response.UserResponse;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/user")
@@ -22,9 +19,7 @@ public class UserController {
 
     @PostMapping("/create")
     public ResponseEntity<UserResponse> createUser(@RequestBody UserRequest userRequest) {
-        userService.createUser(userRequest);
-        return ResponseEntity.ok(UserResponse.builder()
-                .build());
+        return ResponseEntity.ok(userService.createUser(userRequest));
     }
 
     @PostMapping("/sing-in")
@@ -35,20 +30,18 @@ public class UserController {
 
 
     @PutMapping
-    public ResponseEntity<Void> updateUser(@RequestBody UserRequest userRequest){
-        boolean update = userService.updateUser(userRequest);
-        return update ? ResponseEntity.ok().build() : ResponseEntity.status(HttpStatus.BAD_GATEWAY).build();
+    public ResponseEntity<UserResponse> updateUser(@RequestBody UserRequest userRequest){
+        return ResponseEntity.ok(userService.updateUser(userRequest));
     }
 
     @DeleteMapping
-    public ResponseEntity<Void> deleteUser(@RequestBody UserRequest userRequest){
-        boolean update = userService.deleteUser(userRequest);
-        return update ? ResponseEntity.ok().build() : ResponseEntity.status(HttpStatus.BAD_GATEWAY).build();
+    public ResponseEntity<UserResponse> deleteUser(@RequestBody UserRequest userRequest){
+        return ResponseEntity.ok(userService.deleteUser(userRequest));
     }
 
 
     @GetMapping("/all-users")
-    public ResponseEntity<List<UserResponse>> getAllUsers() {
+    public ResponseEntity<UserResponse> getAllUsers() {
         return ResponseEntity.ok(userService.getAllUsers());
 
     }

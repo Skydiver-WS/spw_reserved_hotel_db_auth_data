@@ -10,7 +10,13 @@ import java.util.UUID;
 
 @Entity
 @Data
-@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"username", "inn", "ogrn", "email", "phone"}))
+@Table(uniqueConstraints = {
+        @UniqueConstraint(columnNames = "username"),
+        @UniqueConstraint(columnNames = "inn"),
+        @UniqueConstraint(columnNames = "ogrn"),
+        @UniqueConstraint(columnNames = "email"),
+        @UniqueConstraint(columnNames = "phone")
+})
 public class Users {
 
     @Id
@@ -25,8 +31,8 @@ public class Users {
     private String phone;
     private UserType userType = selectedUserType();
 
-    @OneToMany
-    private List<RoleDto> roleDto;
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<RoleDto> roles;
 
     private UserType selectedUserType() {
         if (Objects.nonNull(inn) && Objects.nonNull(ogrn) && Objects.nonNull(address)) {

@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import spw_reserved_hotel_db_auth_data.entity.RoleDto;
 
 import java.util.List;
 
@@ -14,6 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserRequest  {
+    private String user;
     private String username;
     private String password;
     private String inn;
@@ -21,5 +23,5 @@ public class UserRequest  {
     private String address;
     private String email;
     private String phone;
-    private List<String> role;
+    private List<RoleDto> role;
 }
