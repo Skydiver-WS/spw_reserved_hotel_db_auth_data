@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import spw_reserved_hotel_db_auth_data.entity.RoleDto;
 
 import java.util.List;
+import java.util.UUID;
 
 @Data
 @Builder
@@ -16,6 +17,7 @@ import java.util.List;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class UserResponse {
 
+    private UUID userId;
     private String username;
     private String password;
     private List <RoleDto> role;

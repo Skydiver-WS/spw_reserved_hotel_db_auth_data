@@ -29,8 +29,9 @@ public class UserServiceImpl implements UserService {
         log.info("Creating user {}", userRequest.getUsername());
         Users user = userMapper.userFromUserRequest(userRequest);
         try {
-            userRepository.saveAndFlush(user);
+            Users userNew = userRepository.saveAndFlush(user);
             return UserResponse.builder()
+                    .userId(userNew.getId())
                     .message("User created")
                     .build();
         } catch (InvalidDataAccessApiUsageException ex) {
@@ -64,16 +65,16 @@ public class UserServiceImpl implements UserService {
         Users user = usersOptional.get();
         userMapper.userUpdateFromUserAndUserRequest(user, userRequest);
         try {
-            userRepository.saveAndFlush(user);
+            Users userUpdate = userRepository.saveAndFlush(user);
+            return UserResponse.builder()
+                    .userId(userUpdate.getId())
+                    .message("User updated")
+                    .build();
 
         } catch (DataIntegrityViolationException ex) {
             log.warn(ex.getMessage());
             throw new UsersException("Username, inn, ogrn, email already exists");
         }
-        return UserResponse.builder()
-                .message("User updated")
-                .build();
-
     }
 
     @Override

@@ -26,11 +26,7 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>org.postgresql</groupId>
-			<artifactId>postgresql</artifactId>
-			<scope>runtime</scope>
-		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
@@ -64,6 +60,69 @@
 		</dependency>
 	</dependencies>
 
+	<profiles>
+		<profile>
+			<id>db-postgres</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>
+			<properties>
+				<spring.profiles.active>pg</spring.profiles.active>
+			</properties>
+			<dependencies>
+				<dependency>
+					<groupId>org.postgresql</groupId>
+					<artifactId>postgresql</artifactId>
+					<scope>runtime</scope>
+				</dependency>
+			</dependencies>
+		</profile>
+		<profile>
+			<id>db-h2</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>
+			<properties>
+				<spring.profiles.active>h2</spring.profiles.active>
+			</properties>
+			<dependencies>
+				<dependency>
+					<groupId>com.h2database</groupId>
+					<artifactId>h2</artifactId>
+					<scope>runtime</scope>
+				</dependency>
+			</dependencies>
+		</profile>
+
+		<profile>
+			<id>liquibase-gen</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>
+			<properties>
+				<spring.profiles.active>liquibase-gen</spring.profiles.active>
+			</properties>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.liquibase</groupId>
+						<artifactId>liquibase-maven-plugin</artifactId>
+						<configuration>
+							<url>jdbc:postgresql://127.0.0.1:5432/hotel_db</url>
+							<referenceUrl>hibernate:spring:com.example.models?dialect=org.hibernate.dialect.PostgreSQLDialect</referenceUrl>
+							<username>postgres</username>
+							<password>postgres</password>
+							<defaultSchemaName>hotel</defaultSchemaName>
+							<outputChangeLogFile>src/main/resources/changelog.yml</outputChangeLogFile>
+							<logLevel>debug</logLevel>
+							<verbose>true</verbose>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+
 	<build>
 		<plugins>
 			<plugin>
@@ -86,19 +145,19 @@
 					</annotationProcessorPaths>
 				</configuration>
 			</plugin>
-<!--			<plugin>-->
-<!--				<groupId>org.springframework.boot</groupId>-->
-<!--				<artifactId>spring-boot-maven-plugin</artifactId>-->
-<!--				<configuration>-->
-<!--					<excludes>-->
-<!--						<exclude>-->
-<!--							<groupId>org.projectlombok</groupId>-->
-<!--							<artifactId>lombok</artifactId>-->
-<!--							<version>${lombok.version}</version>-->
-<!--						</exclude>-->
-<!--					</excludes>-->
-<!--				</configuration>-->
-<!--			</plugin>-->
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<excludes>
+						<exclude>
+							<groupId>org.projectlombok</groupId>
+							<artifactId>lombok</artifactId>
+							<version>${lombok.version}</version>
+						</exclude>
+					</excludes>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 

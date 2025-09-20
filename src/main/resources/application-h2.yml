@@ -1,0 +1,22 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:hotel_auth_db_data;INIT=CREATE SCHEMA IF NOT EXISTS hotel_auth_db_data\;SET SCHEMA hotel_auth_db_data
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+        format_sql: false
+    show-sql: false
+    generate-ddl: true
+    defer-datasource-initialization: true
+
+  liquibase:
+    enabled: false
+  sql:
+    init:
+      mode: never
