@@ -31,7 +31,7 @@ public class UserServiceImpl implements UserService {
         try {
             Users userNew = userRepository.saveAndFlush(user);
             return UserResponse.builder()
-                    .userId(userNew.getId())
+                    .userId(userNew.getId().toString())
                     .message("User created")
                     .build();
         } catch (InvalidDataAccessApiUsageException ex) {
@@ -67,7 +67,7 @@ public class UserServiceImpl implements UserService {
         try {
             Users userUpdate = userRepository.saveAndFlush(user);
             return UserResponse.builder()
-                    .userId(userUpdate.getId())
+                    .userId(userUpdate.getId().toString())
                     .message("User updated")
                     .build();
 
