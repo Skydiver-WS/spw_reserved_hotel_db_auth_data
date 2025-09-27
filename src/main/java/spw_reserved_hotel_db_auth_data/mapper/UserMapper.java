@@ -19,6 +19,7 @@ public interface UserMapper {
     Users userFromUserRequest(UserRequest userRequest);
 
     @Mapping(target = "role", source = "roles")
+    @Mapping(target = "userId", source = "id")
     UserResponse userResponseFromUser(Users user);
 
     List<UserResponse> userResponsesFromUsers(List<Users> users);
