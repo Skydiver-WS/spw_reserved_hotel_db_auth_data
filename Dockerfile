@@ -12,4 +12,5 @@ COPY src ./src
 RUN mvn clean package -Pdb-postgres -DskipTests
 
 EXPOSE 8084:8084
+ENV SPRING_PROFILES_ACTIVE=db-postgres
 ENTRYPOINT ["java", "-jar", "app.jar"]
