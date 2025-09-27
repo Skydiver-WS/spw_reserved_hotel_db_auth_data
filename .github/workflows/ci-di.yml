@@ -28,7 +28,7 @@ jobs:
 
       # Шаг 3: Сборка и тестирование проекта с помощью Maven
       - name: Build with Maven
-        run: mvn -DskipTest clean package
+        run: mvn -DskipTests clean package
 
 
       - name: Log into Docker Hub
