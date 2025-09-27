@@ -5,5 +5,6 @@ WORKDIR /app
 
 COPY target/db_auth_service-*.jar app.jar
 
-EXPOSE 8081
+EXPOSE 8084:8084
+ENV SPRING_PROFILES_ACTIVE=db-postgres
 ENTRYPOINT ["java", "-jar", "app.jar"]
