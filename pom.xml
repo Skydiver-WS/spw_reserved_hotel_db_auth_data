@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>spw_reserved_hotel_db_auth_data</groupId>
 	<artifactId>db_auth_service</artifactId>
-	<version>1.0.5</version>
+	<version>1.0.6</version>
 	<name>spw_reserved_hotel_db_auth_data</name>
 	<description>This is service container all users for main service</description>
 	<properties>
