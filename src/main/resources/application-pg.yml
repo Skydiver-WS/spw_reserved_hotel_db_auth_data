@@ -9,7 +9,7 @@ spring:
     hibernate:
       ddl-auto: update
   datasource:
-    url: jdbc:postgresql://localhost:31032/hotel_auth_db_data?ssl=false
+    url: jdbc:postgresql://host.docker.internal:31032/hotel_auth_db_data?ssl=false
     username: postgres
     password: postgres
     hikari:
