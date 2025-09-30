@@ -3,14 +3,22 @@ LABEL authors="Aleksandr"
 
 WORKDIR /app
 
-COPY target/db_auth_service-*.jar app.jar
-
+# Копируем исходный код ДО сборки
 COPY pom.xml .
 COPY src ./src
 
-# Активируем нужные Maven профили
-RUN mvn clean package -Ppg,db-postgres -DskipTests
+# Собираем приложение с Maven профилями
+RUN mvn clean package -Pdb-postgres -DskipTests
 
-EXPOSE 8084:8084
+# Финальный образ
+FROM amazoncorretto:23
+LABEL authors="Aleksandr"
+
+WORKDIR /app
+
+# Копируем собранный JAR из стадии builder
+COPY --from=builder /app/target/db_auth_service-*.jar app.jar
+
+EXPOSE 8084
 ENV SPRING_PROFILES_ACTIVE=pg
 ENTRYPOINT ["java", "-jar", "app.jar"]

@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>spw_reserved_hotel_db_auth_data</groupId>
 	<artifactId>db_auth_service</artifactId>
-	<version>1.0.9</version>
+	<version>1.0.10</version>
 	<name>spw_reserved_hotel_db_auth_data</name>
 	<description>This is service container all users for main service</description>
 	<properties>
@@ -62,7 +62,7 @@
 
 	<profiles>
 		<profile>
-			<id>pg</id>
+			<id>db-postgres</id>
 			<activation>
 				<activeByDefault>false</activeByDefault>
 			</activation>
@@ -75,7 +75,7 @@
 			</dependencies>
 		</profile>
 		<profile>
-			<id>local</id>
+			<id>db-h2</id>
 			<activation>
 				<activeByDefault>false</activeByDefault>
 			</activation>
