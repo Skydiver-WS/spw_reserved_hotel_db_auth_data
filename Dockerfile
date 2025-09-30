@@ -9,8 +9,8 @@ COPY pom.xml .
 COPY src ./src
 
 # Активируем нужные Maven профили
-RUN mvn clean package -Pdb-postgres,pg -DskipTests
+RUN mvn clean package -Ppg,db-postgres -DskipTests
 
 EXPOSE 8084:8084
-ENV SPRING_PROFILES_ACTIVE=db-postgres
+ENV SPRING_PROFILES_ACTIVE=pg
 ENTRYPOINT ["java", "-jar", "app.jar"]
