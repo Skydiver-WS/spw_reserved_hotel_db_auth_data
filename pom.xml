@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>spw_reserved_hotel_db_auth_data</groupId>
 	<artifactId>db_auth_service</artifactId>
-	<version>1.0.12</version>
+	<version>1.0.13</version>
 	<name>spw_reserved_hotel_db_auth_data</name>
 	<description>This is service container all users for main service</description>
 	<properties>
@@ -146,20 +146,20 @@
 					</annotationProcessorPaths>
 				</configuration>
 			</plugin>
-<!--			<plugin>-->
-<!--				<groupId>org.springframework.boot</groupId>-->
-<!--				<artifactId>spring-boot-maven-plugin</artifactId>-->
-<!--				<version>${parent.version}</version>-->
-<!--				<configuration>-->
-<!--					<excludes>-->
-<!--						<exclude>-->
-<!--							<groupId>org.projectlombok</groupId>-->
-<!--							<artifactId>lombok</artifactId>-->
-<!--&lt;!&ndash;							<version>${lombok.version}</version>&ndash;&gt;-->
-<!--						</exclude>-->
-<!--					</excludes>-->
-<!--				</configuration>-->
-<!--			</plugin>-->
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<version>${parent.version}</version>
+				<configuration>
+					<excludes>
+						<exclude>
+							<groupId>org.projectlombok</groupId>
+							<artifactId>lombok</artifactId>
+<!--							<version>${lombok.version}</version>-->
+						</exclude>
+					</excludes>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 
