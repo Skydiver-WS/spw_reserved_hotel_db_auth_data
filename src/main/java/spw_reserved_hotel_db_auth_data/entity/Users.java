@@ -1,7 +1,10 @@
 package spw_reserved_hotel_db_auth_data.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import spw_reserved_hotel_db_auth_data.dto.type.UserType;
 
 import java.util.List;
@@ -17,6 +20,9 @@ import java.util.UUID;
         @UniqueConstraint(columnNames = "email"),
         @UniqueConstraint(columnNames = "phone")
 })
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Users {
 
     @Id
@@ -24,6 +30,9 @@ public class Users {
     private UUID id;
     private String username;
     private String password;
+    private String firstName;
+    private String lastName;
+    private String middleName;
     private String inn;
     private String ogrn;
     private String address;
