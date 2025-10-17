@@ -40,7 +40,7 @@ public class UserServiceImpl implements UserService {
             throw new UsersException("User " + userRequest.getUsername() + " created failed");
         } catch (DataIntegrityViolationException ex) {
             log.warn(ex.getMessage());
-            throw new UsersException("Username, inn, ogrn, email already exists");
+            throw new UsersException("Username, inn, ogrn or email already exists");
         }
     }
 

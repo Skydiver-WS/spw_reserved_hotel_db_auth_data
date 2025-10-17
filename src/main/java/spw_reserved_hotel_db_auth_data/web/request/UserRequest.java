@@ -25,9 +25,25 @@ public class UserRequest  {
     @NotNull
     private String password;
     private List<RoleDto> role;
+    private AdminRequest admin;
     private ManagerRequest manager;
     private EmployeeRequest employee;
     private ClientRequest client;
+
+    @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Builder
+    public static class AdminRequest {
+        private String firstName;
+        private String lastName;
+        private String middleName;
+        private String inn;
+        private String ogrn;
+        private String address;
+        private String phone;
+        private String email;
+    }
 
     @Data
     @Builder

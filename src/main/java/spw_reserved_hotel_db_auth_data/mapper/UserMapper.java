@@ -19,6 +19,19 @@ public interface UserMapper {
     // Маппинг для Manager
     @Mapping(target = "id", source = "userId")
     @Mapping(target = "roles", source = "role")
+    @Mapping(target = "firstName", source = "admin.firstName")
+    @Mapping(target = "lastName", source = "admin.lastName")
+    @Mapping(target = "middleName", source = "admin.middleName")
+    @Mapping(target = "inn", source = "admin.inn")
+    @Mapping(target = "ogrn", source = "admin.ogrn")
+    @Mapping(target = "address", source = "admin.address")
+    @Mapping(target = "phone", source = "admin.phone")
+    @Mapping(target = "email", source = "admin.email")
+    Users fromAdminRequest(UserRequest userRequest);
+
+    // Маппинг для Manager
+    @Mapping(target = "id", source = "userId")
+    @Mapping(target = "roles", source = "role")
     @Mapping(target = "firstName", source = "manager.firstName")
     @Mapping(target = "lastName", source = "manager.lastName")
     @Mapping(target = "middleName", source = "manager.middleName")
@@ -69,6 +82,9 @@ public interface UserMapper {
     }
 
     default Users userFromUserRequest(UserRequest userRequest){
+        if (Objects.nonNull(userRequest.getAdmin())){
+            return fromAdminRequest(userRequest);
+        }
         if (Objects.nonNull(userRequest.getManager())){
             return fromManagerRequest(userRequest);
         }
@@ -78,6 +94,6 @@ public interface UserMapper {
         if (Objects.nonNull(userRequest.getClient())){
             return fromClientRequest(userRequest);
         }
-        throw new UsersException("Objects manager, employee or client from request are null");
+        throw new UsersException("Objects admin, manager, employee or client from request are null");
     }
 }
