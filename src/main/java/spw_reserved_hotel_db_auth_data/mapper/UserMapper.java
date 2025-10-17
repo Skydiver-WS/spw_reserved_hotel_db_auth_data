@@ -4,6 +4,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.Named;
+import spw_reserved_hotel_db_auth_data.dto.type.UserType;
 import spw_reserved_hotel_db_auth_data.entity.RoleDto;
 import spw_reserved_hotel_db_auth_data.entity.Users;
 import spw_reserved_hotel_db_auth_data.exception.UsersException;
@@ -76,23 +77,26 @@ public interface UserMapper {
 
     void userUpdateFromUserAndUserRequest(@MappingTarget Users user, UserRequest userRequest);
 
-    @Named("mappingRole")
-    default List<String> mappingRoles(List<RoleDto> role){
-        return role.stream().map(r -> r.getRolesType().name()).toList();
-    }
-
     default Users userFromUserRequest(UserRequest userRequest){
         if (Objects.nonNull(userRequest.getAdmin())){
-            return fromAdminRequest(userRequest);
+            Users users = fromAdminRequest(userRequest);
+            users.setUserType(UserType.ADMIN);
+            return users;
         }
         if (Objects.nonNull(userRequest.getManager())){
-            return fromManagerRequest(userRequest);
+            Users users = fromManagerRequest(userRequest);
+            users.setUserType(UserType.ORGANIZATION);
+            return users;
         }
         if (Objects.nonNull(userRequest.getEmployee())){
-            return fromEmployeeRequest(userRequest);
+            Users users = fromEmployeeRequest(userRequest);
+            users.setUserType(UserType.EMPLOYEE);
+            return users;
         }
         if (Objects.nonNull(userRequest.getClient())){
-            return fromClientRequest(userRequest);
+            Users users = fromClientRequest(userRequest);
+            users.setUserType(UserType.CLIENT);
+            return users;
         }
         throw new UsersException("Objects admin, manager, employee or client from request are null");
     }

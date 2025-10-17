@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 import spw_reserved_hotel_db_auth_data.dto.type.UserType;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.UUID;
 
 @Entity
@@ -38,15 +37,8 @@ public class Users {
     private String address;
     private String email;
     private String phone;
-    private UserType userType = selectedUserType();
+    private UserType userType;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<RoleDto> roles;
-
-    private UserType selectedUserType() {
-        if (Objects.nonNull(inn) && Objects.nonNull(ogrn) && Objects.nonNull(address)) {
-            return UserType.ORGANIZATION;
-        }
-        return UserType.PHYSICAL;
-    }
 }
