@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Values.postgresql.name }}-config
+  labels:
+    app: {{ .Values.postgresql.name }}
+    component: database
+data:
+  postgresql.conf: |
+    # Database Configuration
+    max_connections = {{ .Values.postgresql.config.max_connections }}
+    shared_buffers = {{ .Values.postgresql.config.shared_buffers }}
+    logging_collector = on
+    log_statement = 'all'
+    log_connections = on
+    log_disconnections = on
+
+    # Memory Configuration
+    work_mem = 4MB
+    maintenance_work_mem = 64MB
+
+    # Checkpoint Configuration
+    checkpoint_timeout = 15min
