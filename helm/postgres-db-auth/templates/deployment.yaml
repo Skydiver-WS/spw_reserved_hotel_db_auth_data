@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Values.postgresql.name }}.deployment
+  name: {{ .Values.postgresql.name }}-deployment
   labels:
     app: {{ .Values.postgresql.name }}
     component: database
@@ -45,25 +45,17 @@ spec:
             - name: postgresql-config
               mountPath: /opt/app-root/src/postgresql-cfg/
           resources:
-            {{- toYaml .Values.postgresql.resources.deployment | nindent 12 }}
+            {{- toYaml .Values.postgresql.resources.pod | nindent 12 }}
           livenessProbe:
-            exec:
-              command:
-                - /bin/sh
-                - -i
-                - -c
-                - psql -h 127.0.0.1 -U $POSTGRESQL_USER -d $POSTGRESQL_DATABASE -c 'SELECT 1'
-            initialDelaySeconds: 30
+            tcpSocket:
+              port: {{ .Values.postgresql.port }}
+            initialDelaySeconds: 60
             periodSeconds: 10
             timeoutSeconds: 5
           readinessProbe:
-            exec:
-              command:
-                - /bin/sh
-                - -i
-                - -c
-                - psql -h 127.0.0.1 -U $POSTGRESQL_USER -d $POSTGRESQL_DATABASE -c 'SELECT 1'
-            initialDelaySeconds: 5
+            tcpSocket:
+              port: {{ .Values.postgresql.port }}
+            initialDelaySeconds: 60
             periodSeconds: 5
             timeoutSeconds: 3
           securityContext:

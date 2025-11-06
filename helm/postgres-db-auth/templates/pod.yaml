@@ -1,72 +1,72 @@
-apiVersion: v1
-kind: Pod
-metadata:
-  name: postgres-pod
-  namespace: {{ .Values.global.namespace }}
-  labels:
-    app: {{ .Values.postgresql.name }}
-    component: database
-    chart: {{ .Chart.Name }}-{{ .Chart.Version }}
-    release: {{ .Release.Name }}
-  annotations:
-    openshift.io/display-name: "{{ .Values.postgresql.name }}"
-    openshift.io/display-description: "{{ .Chart.Description }}"
-spec:
-  containers:
-    - name: {{ .Chart.Name }}
-      image: "{{ .Values.postgresql.image }}"
-      imagePullPolicy: Always
-      ports:
-        - name: postgres-port
-          containerPort: {{ .Values.postgresql.port }}
-          protocol: TCP
-      env:
-        - name: POSTGRESQL_DATABASE
-          value: "{{ .Values.postgresql.database }}"
-        - name: POSTGRES_USERNAME
-          value: "{{ .Values.postgresql.username }}"
-        - name: POSTGRES_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: postgres-secret
-              key: postgres-password
-        - name: POSTGRESQL_ENCODING
-          value: "{{ .Values.postgresql.encoding }}"
-      volumeMounts:
-        - name: postgresql-data
-          mountPath: /var/lib/pgsql/data
-        - name: postgresql-config
-          mountPath: /opt/app-root/src/postgresql-cfg/
-      resources:
-             {{- toYaml .Values.postgresql.resources.pod | nindent 8 }}
-      livenessProbe:
-          exec:
-            command:
-              - /bin/sh
-              - -i
-              - -c
-              - psql -h 127.0.0.1 -U $POSTGRESQL_USER -d $POSTGRESQL_DATABASE -c 'SELECT 1'
-          initialDelaySeconds: 30
-          periodSeconds: 10
-          timeoutSeconds: 5
-      readinessProbe:
-          exec:
-            command:
-              - /bin/sh
-              - -i
-              - -c
-              - psql -h 127.0.0.1 -U $POSTGRESQL_USER -d $POSTGRESQL_DATABASE -c 'SELECT 1'
-          initialDelaySeconds: 5
-          periodSeconds: 5
-          timeoutSeconds: 3
-  volumes:
-          - name: postgresql-data
-            persistentVolumeClaim:
-              claimName: {{ .Values.postgresql.name }}-pvc
-          - name: postgresql-config
-            configMap:
-              name: {{ .Values.postgresql.name }}-config
-  securityContext:
-          runAsNonRoot: {{ .Values.postgresql.securityContext.runAsNonRoot }}
-          seccompProfile:
-            type: {{ .Values.postgresql.securityContext.seccompProfile.type }}
+{{/*apiVersion: v1*/}}
+{{/*kind: Pod*/}}
+{{/*metadata:*/}}
+{{/*  name: postgres-pod*/}}
+{{/*  namespace: {{ .Values.global.namespace }}*/}}
+{{/*  labels:*/}}
+{{/*    app: {{ .Values.postgresql.name }}*/}}
+{{/*    component: database*/}}
+{{/*    chart: {{ .Chart.Name }}-{{ .Chart.Version }}*/}}
+{{/*    release: {{ .Release.Name }}*/}}
+{{/*  annotations:*/}}
+{{/*    openshift.io/display-name: "{{ .Values.postgresql.name }}"*/}}
+{{/*    openshift.io/display-description: "{{ .Chart.Description }}"*/}}
+{{/*spec:*/}}
+{{/*  containers:*/}}
+{{/*    - name: {{ .Chart.Name }}*/}}
+{{/*      image: "{{ .Values.postgresql.image }}"*/}}
+{{/*      imagePullPolicy: Always*/}}
+{{/*      ports:*/}}
+{{/*        - name: postgres-port*/}}
+{{/*          containerPort: {{ .Values.postgresql.port }}*/}}
+{{/*          protocol: TCP*/}}
+{{/*      env:*/}}
+{{/*        - name: POSTGRESQL_DATABASE*/}}
+{{/*          value: "{{ .Values.postgresql.database }}"*/}}
+{{/*        - name: POSTGRES_USERNAME*/}}
+{{/*          value: "{{ .Values.postgresql.username }}"*/}}
+{{/*        - name: POSTGRES_PASSWORD*/}}
+{{/*          valueFrom:*/}}
+{{/*            secretKeyRef:*/}}
+{{/*              name: postgres-secret*/}}
+{{/*              key: postgres-password*/}}
+{{/*        - name: POSTGRESQL_ENCODING*/}}
+{{/*          value: "{{ .Values.postgresql.encoding }}"*/}}
+{{/*      volumeMounts:*/}}
+{{/*        - name: postgresql-data*/}}
+{{/*          mountPath: /var/lib/pgsql/data*/}}
+{{/*        - name: postgresql-config*/}}
+{{/*          mountPath: /opt/app-root/src/postgresql-cfg/*/}}
+{{/*      resources:*/}}
+{{/*             {{- toYaml .Values.postgresql.resources.pod | nindent 8 }}*/}}
+{{/*      livenessProbe:*/}}
+{{/*          exec:*/}}
+{{/*            command:*/}}
+{{/*              - /bin/sh*/}}
+{{/*              - -i*/}}
+{{/*              - -c*/}}
+{{/*              - psql -h 127.0.0.1 -U $POSTGRESQL_USER -d $POSTGRESQL_DATABASE -c 'SELECT 1'*/}}
+{{/*          initialDelaySeconds: 30*/}}
+{{/*          periodSeconds: 10*/}}
+{{/*          timeoutSeconds: 5*/}}
+{{/*      readinessProbe:*/}}
+{{/*          exec:*/}}
+{{/*            command:*/}}
+{{/*              - /bin/sh*/}}
+{{/*              - -i*/}}
+{{/*              - -c*/}}
+{{/*              - psql -h 127.0.0.1 -U $POSTGRESQL_USER -d $POSTGRESQL_DATABASE -c 'SELECT 1'*/}}
+{{/*          initialDelaySeconds: 5*/}}
+{{/*          periodSeconds: 5*/}}
+{{/*          timeoutSeconds: 3*/}}
+{{/*  volumes:*/}}
+{{/*          - name: postgresql-data*/}}
+{{/*            persistentVolumeClaim:*/}}
+{{/*              claimName: {{ .Values.postgresql.name }}-pvc*/}}
+{{/*          - name: postgresql-config*/}}
+{{/*            configMap:*/}}
+{{/*              name: {{ .Values.postgresql.name }}-config*/}}
+{{/*  securityContext:*/}}
+{{/*          runAsNonRoot: {{ .Values.postgresql.securityContext.runAsNonRoot }}*/}}
+{{/*          seccompProfile:*/}}
+{{/*            type: {{ .Values.postgresql.securityContext.seccompProfile.type }}*/}}
