@@ -24,7 +24,7 @@ public class UserController {
     }
 
     @PostMapping("/sing-in")
-    public ResponseEntity<UserResponse> singIn(@RequestBody @Valid UserRequest userRequest) {
+    public ResponseEntity<UserResponse> singIn(@RequestBody UserRequest userRequest) {
         UserResponse response = userService.authenticate(userRequest);
         return ResponseEntity.ok(response);
     }
