@@ -1,0 +1,62 @@
+# Global configuration
+global:
+  namespace: postgres-db-auth
+
+# PostgreSQL configuration
+postgresql:
+  name: postgresql
+  image: registry.redhat.io/rhel8/postgresql-16:latest
+  database: hotel_auth_db_data
+  username: postgres
+  # Пароль можно задать здесь или при установке через --set
+  password: postgres
+
+  # Конфигурация базы данных
+  port: 5432
+  encoding: UTF8
+
+  # Ресурсы
+  resources:
+    deployment:
+      requests:
+        memory: "1Gi"
+        cpu: "1000m"
+      limits:
+        memory: "2Gi"
+        cpu: "2000m"
+    pod:
+      requests:
+        memory: "256Mi"
+        cpu: "200m"
+      limits:
+        memory: "512Mi"
+        cpu: "500m"
+
+  # Хранилище
+  persistence:
+    enabled: true
+    size: 10Gi
+    storageClass: ""
+    accessMode: ReadWriteOnce
+
+  # Безопасность OpenShift
+  securityContext:
+    runAsNonRoot: true
+    runAsUser: 1000650000
+    runAsGroup: 0
+    fsGroup: 1000650000
+    allowPrivilegeEscalation: false
+    seccompProfile:
+      type: RuntimeDefault
+    capabilities:
+      drop: [ "ALL" ]
+
+  # Конфигурация сервиса
+  service:
+    type: ClusterIP
+    port: 5432
+
+  # Дополнительные настройки
+  config:
+    max_connections: "100"
+    shared_buffers: "256MB"
