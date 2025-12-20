@@ -35,8 +35,7 @@ public class UserServiceImpl implements UserService {
                     .message("User created")
                     .build();
         } catch (InvalidDataAccessApiUsageException ex) {
-            log.error(ex.getMessage());
-            ex.printStackTrace();
+            log.error(ex.getMessage(), ex);
             throw new UsersException("User " + userRequest.getUsername() + " created failed");
         } catch (DataIntegrityViolationException ex) {
             log.warn(ex.getMessage());

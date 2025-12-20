@@ -11,7 +11,8 @@ import spw_reserved_hotel_db_auth_data.web.response.UserResponse;
 public class UsersExceptionHandler {
     @ExceptionHandler({UsersException.class})
     public ResponseEntity<UserResponse> exceptionsResponse(UsersException ex) {
-        return ResponseEntity.ok(UserResponse.builder()
+        return ResponseEntity.badRequest()
+                .body(UserResponse.builder()
                 .error(UserResponse.ErrorResponse.builder()
                         .message(ex.getMessage())
                         .build()).build());
