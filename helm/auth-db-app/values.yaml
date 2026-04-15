@@ -12,7 +12,7 @@ image:
   #  Never	не тянет вообще
   pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
-  tag: v1.1.7
+  tag: v1.1.9
 
 service:
   type: ClusterIP
