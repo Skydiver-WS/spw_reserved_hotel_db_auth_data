@@ -11,7 +11,7 @@ spring:
   datasource:
 #    url: jdbc:postgresql://host.docker.internal:31032/hotel_auth_db_data?ssl=false
 #    url: jdbc:postgresql://localhost:5433/hotel_auth_db_data?ssl=false
-    url: jdbc:postgresql://postgres-auth-db-service.postgress-db.svc.cluster.local:5432/hotel_auth_db_data
+    url: jdbc:postgresql://postgres-auth-db-service.postgres-db.svc.cluster.local:5432/hotel_auth_db_data
     username: postgres
     password: postgres
     hikari:
