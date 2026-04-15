@@ -35,8 +35,7 @@ public class UserServiceImpl implements UserService {
                     .message("User created")
                     .build();
         } catch (InvalidDataAccessApiUsageException ex) {
-            log.error(ex.getMessage());
-            ex.printStackTrace();
+            log.error(ex.getMessage(), ex);
             throw new UsersException("User " + userRequest.getUsername() + " created failed");
         } catch (DataIntegrityViolationException ex) {
             log.warn(ex.getMessage());
@@ -58,7 +57,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserResponse updateUser(UserRequest userRequest) {
         log.info("Updating user {}", userRequest.getUsername());
-        Optional<Users> usersOptional = userRepository.findByUsername(userRequest.getUser());
+        Optional<Users> usersOptional = userRepository.findByUsername(userRequest.getUsername());
         if (usersOptional.isEmpty()) {
             throw new UsersException("User " + userRequest.getUsername() + " not found in database");
         }
