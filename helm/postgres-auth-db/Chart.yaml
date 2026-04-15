@@ -1,5 +1,5 @@
 apiVersion: v2
-name: postgres-db-auth
+name: postgres-auth-db
 description: A Helm chart for Kubernetes
 
 # A chart can be either an 'application' or a 'library' chart.
@@ -21,25 +21,4 @@ version: 0.1.0
 # incremented each time you make changes to the application. Versions are not expected to
 # follow Semantic Versioning. They should reflect the version the application is using.
 # It is recommended to use it with quotes.
-appVersion: "1.16.0"
-
-annotations:
-  openshift.io/display-name: "This is db for auth data"
-  openshift.io/provider-display-name: "Test description"
-
-keywords:
-  - spring-boot
-  - postgresql
-  - java
-
-maintainers:
-  - name: Your Name
-    email: your.email@company.com
-
-
-#    Удалить все
-#oc adm top nodes
-#oc describe nodes | grep -A 5 -B 5 "disk-pressure"
-
-#  Инсталяция хелма в шифт namespce = названию проекта в шифте
-#  helm install postgres-db-auth . --namespace postgres-db-auth
+appVersion: "16"
