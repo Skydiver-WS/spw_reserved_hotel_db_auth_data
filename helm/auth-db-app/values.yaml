@@ -12,14 +12,14 @@ image:
   #  Never	не тянет вообще
   pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
-  tag: v1.1.12
+  tag: v1.1.13
 
 service:
   type: ClusterIP
   port: 8084
 
 db_properties:
-  url: jdbc:postgresql://postgres-hotel-db-service.postgres-db.svc.cluster.local:5433/hotel_db?currentSchema=hotel
+  url: jdbc:postgresql://postgres-hotel-db-service.database.svc.cluster.local:5433/hotel_db?currentSchema=hotel
   ddl_mode: update
 
 resources:
