@@ -8,7 +8,7 @@ spec:
     type: RollingUpdate
     rollingUpdate:
       maxSurge: 1 # сколько новых Pod можно создать сверху
-      maxUnavailable: 1 # сколько можно удалить старых
+      maxUnavailable: 0 # сколько можно удалить старых
   selector:
     matchLabels:
       app: {{ .Chart.Name }}
@@ -23,4 +23,40 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - containerPort: {{ .Values.service.port }}
+          env:
+            - name: DB_AUTH_URL
+              value: {{ .Values.db_properties.url }}
+            - name: DDL-AUTO-MODE
+              value: {{ .Values.db_properties.ddl_mode }}
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.secret.name }}
+                  key: POSTGRES_USERNAME
+
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.secret.name }}
+                  key: POSTGRES_PASSWORD
+            - name: JAVA_TOOL_OPTIONS
+              value: "-XX:MaxRAMPercentage=75.0 -XX:InitialRAMPercentage=50.0"
+          livenessProbe:
+            tcpSocket:
+              port: {{ .Values.service.port }}
+            initialDelaySeconds: 30
+            periodSeconds: 10
+
+          readinessProbe:
+            tcpSocket:
+              port: {{ .Values.service.port }}
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          resources:
+            limits:
+              cpu: {{ .Values.resources.limits.cpu }}
+              memory: {{ .Values.resources.limits.memory }}
+            requests:
+              cpu: {{ .Values.resources.requests.cpu }}
+              memory: {{ .Values.resources.requests.memory }}
 

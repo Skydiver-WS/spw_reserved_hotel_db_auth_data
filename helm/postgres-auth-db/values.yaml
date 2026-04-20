@@ -10,7 +10,7 @@ image:
   #  Always	всегда тянет образ
   #  IfNotPresent	только если нет локально
   #  Never	не тянет вообще
-  pullPolicy: Always
+  pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   tag: 16
 
@@ -26,6 +26,14 @@ secret:
 
 persistence:
   enabled: true
-  size: 10Gi
+  size: 1Gi
+
+resource:
+  limit:
+    cpu: 500m
+    memory: 500Mi
+  request:
+    cpu: 500m
+    memory: 256Mi
 
 

@@ -19,7 +19,8 @@ spec:
     spec:
 {{/*      Рут права для создание директории*/}}
       securityContext:
-        fsGroup: 1000710000
+        runAsNonRoot: true
+
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
@@ -72,6 +73,14 @@ spec:
               port: {{ .Values.service.port }}
             initialDelaySeconds: 5
             periodSeconds: 10
+
+          resources:
+            requests:
+              cpu: {{ .Values.resource.request.cpu }}
+              memory: {{ .Values.resource.request.memory }}
+            limits:
+              cpu: {{ .Values.resource.limit.cpu }}
+              memory: {{ .Values.resource.limit.memory }}
 
           # ✅ добавлено хранилище данных (иначе данные теряются)
           volumeMounts:
