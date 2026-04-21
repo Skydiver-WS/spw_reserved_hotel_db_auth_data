@@ -28,7 +28,7 @@ spec:
               value: {{ .Values.db_properties.url }}
             - name: DDL-AUTO-MODE
               value: {{ .Values.db_properties.ddl_mode }}
-            - name: POSTGRES_USER
+            - name: POSTGRES_USERNAME
               valueFrom:
                 secretKeyRef:
                   name: {{ .Values.secret.name }}

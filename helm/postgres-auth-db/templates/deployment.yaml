@@ -61,6 +61,18 @@ spec:
             - name: PGDATA
               value: /var/lib/postgresql/data/pgdata
 
+          args:
+            - "-c"
+            - "max_connections=200"
+            - "-c"
+            - "shared_buffers=256MB"
+            - "-c"
+            - "effective_cache_size=1GB"
+            - "-c"
+            - "max_parallel_workers=4"
+            - "-c"
+            - "idle_in_transaction_session_timeout=60000"
+
           # ✅ добавлены probes (K8s будет понимать состояние БД)
           livenessProbe:
             tcpSocket:

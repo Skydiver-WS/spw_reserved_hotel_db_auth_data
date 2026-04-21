@@ -10,7 +10,7 @@ image:
   #  Always	всегда тянет образ
   #  IfNotPresent	только если нет локально
   #  Never	не тянет вообще
-  pullPolicy: Always
+  pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   tag: v1.1.13
 
@@ -19,7 +19,7 @@ service:
   port: 8084
 
 db_properties:
-  url: jdbc:postgresql://postgres-hotel-db-service.database.svc.cluster.local:5433/hotel_db?currentSchema=hotel
+  url: jdbc:postgresql://postgres-auth-db-service.database.svc.cluster.local:5432/hotel_auth_db_data?ssl=false
   ddl_mode: update
 
 resources:
